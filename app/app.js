@@ -44,4 +44,6 @@ app.use(bodyParser.json());
 
 module.exports = app;
 
+app.use('/', routes);
+
 app.listen(3000);
