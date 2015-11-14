@@ -7,7 +7,7 @@ let session = require('express-session');
 let mongoose = require('mongoose');
 let MongoStore = require('connect-mongo')(session);
 let passport = require('passport');
-let config = require('../config');
+let config = require('./config');
 
 var app = express();
 
@@ -40,11 +40,5 @@ app.use(bodyParser.urlencoded({
 
 // parse application/json
 app.use(bodyParser.json());
-
-app.post("/text", function (req, res) {
-    console.log(req.body);
-});
-
-module.exports = app;
 
 app.listen(3000);
