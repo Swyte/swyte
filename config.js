@@ -1,5 +1,5 @@
 module.exports = {
-    mongoUrl: 'mongodb://127.0.0.1:27017/hh',
+    mongoUrl: 'mongodb://hackharvard:hackharvard@ds053964.mongolab.com:53964/hh',
     sessionCookie: {
         maxAge: 8640000,
         httpOnly: true,

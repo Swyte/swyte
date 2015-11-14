@@ -13,6 +13,7 @@
     "connect-mongo": "^0.8.2",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
+    "jade": "^1.11.0",
     "mongoose": "^4.2.5",
     "passport": "^0.3.2"
   }
