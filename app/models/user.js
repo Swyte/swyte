@@ -3,9 +3,9 @@ var mongoose = require('mongoose');
 var userSchema = new mongoose.Schema({
     phone: Number,
     
-    facebook: String,
-    twitter: String,
-    instagram: String,
+    facebook: { type: String, default: ''},
+    twitter: {type: String, default: ''},
+    instagram: {type: String, default: ''},
     tokens: Array,
 
     profile: {
