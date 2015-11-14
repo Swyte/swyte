@@ -22,7 +22,7 @@ passport.deserializeUser((id, done) => {
  */
 passport.use(new FacebookStrategy(secrets.facebook, (req, accessToken, refreshToken, profile, done) => {
     Users.findOne({
-        phone: req.params.phone
+        phone: req.query.phone
     }, (err, existingUser) => {
         if (existingUser && existingUser.facebook) {
             // There's already an Facebook account associated with this user.
