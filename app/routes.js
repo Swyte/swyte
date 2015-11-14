@@ -31,7 +31,8 @@ exports.text = (req, res) => {
 						  /* -----------------------------TEMPLATES ----------------------------- */
 			}
 		} else { // Not found, register new user
-			res.send("<Response><Message></Message></Response>");
+			res.send("<Response><Message>To get started, we need access to your Facebook account. https://localhost:3000/auth/facebook</Message></Response>");
 		}
 	});
 };
+
