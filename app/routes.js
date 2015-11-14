@@ -1,5 +1,3 @@
-var app = require('../app');
-
-app.get('/', (req, res) => {
-    res.status(200).send();
-});
+exports.index = (req, res) => {
+    res.send("Hello");
+};

@@ -8,6 +8,7 @@ let mongoose = require('mongoose');
 let MongoStore = require('connect-mongo')(session);
 let passport = require('passport');
 let config = require('../config');
+let routes = require('./routes');
 
 var app = express();
 
@@ -41,6 +42,6 @@ app.use(bodyParser.urlencoded({
 // parse application/json
 app.use(bodyParser.json());
 
-module.exports = app;
+app.get('/', routes.index);
 
 app.listen(3000);
