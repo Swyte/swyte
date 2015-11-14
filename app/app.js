@@ -10,6 +10,8 @@ let passport = require('passport');
 let config = require('./config/config');
 let routes = require('./routes');
 
+require('./config/passport');
+
 var app = express();
 
 // Connect to test database (hh for HackHarvard)

@@ -4,18 +4,68 @@ let passport = require('passport');
 let InstagramStrategy = require('passport-instagram').Strategy;
 let FacebookStrategy = require('passport-facebook').Strategy;
 let TwitterStrategy = require('passport-twitter').Strategy;
-let secrets = require('./config/secrets');
-let Users = require('./models/user');
+let secrets = require('./secrets');
+let Users = require('../models/user');
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
+    Users.findById(id, (err, user) => {
         done(err, user);
     });
 });
+
+/**
+ * Sign in with Facebook.
+ */
+passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, refreshToken, profile, done) {
+    Users.findOne({
+        phone: req.body.phone
+    }, (err, existingUser) => {
+        if (existingUser && existingUser.facebook) {
+            // There's already an Facebook account associated with this user.
+            req.flash('errors', {
+                msg: 'There is already a Facebook account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
+            });
+            done(err);
+        } else if (existingUser) {
+            // User already exists but does not have their Facebook account
+            // attached.
+            existingUser.facebook = profile.id;
+            existingUser.tokens.push({
+                kind: 'facebook',
+                accessToken: accessToken
+            });
+            
+            user.profile.name = profile.displayName;
+            user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
+            user.profile.location = (profile._json.location) ? profile._json.location.name : '';
+            existingUser.save(function(err) {
+                req.flash('info', {
+                    msg: 'Facebook account has been linked.'
+                });
+                done(err, existingUser);
+            });
+        } else {
+            var user = new Users();
+            user.phone = req.body.phone;
+            user.facebook = profile.id;
+            user.tokens.push({
+                kind: 'facebook',
+                accessToken: accessToken
+            });
+            
+            user.profile.name = profile.displayName;
+            user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
+            user.profile.location = (profile._json.location) ? profile._json.location.name : '';
+            user.save(function(err) {
+                done(err, user);
+            });
+        }
+    });
+}));
 
 /**
  * Sign in with Instagram.
@@ -46,145 +96,47 @@ passport.use(new InstagramStrategy(secrets.instagram, function(req, accessToken,
                 done(err, existingUser);
             });
         } else {
-            var user = new Users();
-            user.phone = req.body.phone;
-            user.instagram = profile.id;
-            user.tokens.push({
-                kind: 'instagram',
-                accessToken: accessToken
+            req.flash('errors', {
+                msg: 'An account must be created first using Facebook.'
             });
-            user.profile.name = profile.displayName;
-            user.profile.picture = profile._json.data.profile_picture;
-            user.save(function(err) {
-                done(err, user);
-            });
+            done(err);
         }
     });
 }));
 
 /**
- * Sign in with Facebook.
- */
-passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, refreshToken, profile, done) {
-    if (req.user) {
-        User.findOne({
-            facebook: profile.id
-        }, function(err, existingUser) {
-            if (existingUser) {
-                req.flash('errors', {
-                    msg: 'There is already a Facebook account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
-                });
-                done(err);
-            } else {
-                User.findById(req.user.id, function(err, user) {
-                    user.facebook = profile.id;
-                    user.tokens.push({
-                        kind: 'facebook',
-                        accessToken: accessToken
-                    });
-                    user.profile.name = user.profile.name || profile.displayName;
-                    user.profile.gender = user.profile.gender || profile._json.gender;
-                    user.profile.picture = user.profile.picture || 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
-                    user.save(function(err) {
-                        req.flash('info', {
-                            msg: 'Facebook account has been linked.'
-                        });
-                        done(err, user);
-                    });
-                });
-            }
-        });
-    } else {
-        User.findOne({
-            facebook: profile.id
-        }, function(err, existingUser) {
-            if (existingUser) return done(null, existingUser);
-            User.findOne({
-                email: profile._json.email
-            }, function(err, existingEmailUser) {
-                if (existingEmailUser) {
-                    req.flash('errors', {
-                        msg: 'There is already an account using this email address. Sign in to that account and link it with Facebook manually from Account Settings.'
-                    });
-                    done(err);
-                } else {
-                    var user = new User();
-                    user.email = profile._json.email;
-                    user.facebook = profile.id;
-                    user.tokens.push({
-                        kind: 'facebook',
-                        accessToken: accessToken
-                    });
-                    user.profile.name = profile.displayName;
-                    user.profile.gender = profile._json.gender;
-                    user.profile.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
-                    user.profile.location = (profile._json.location) ? profile._json.location.name : '';
-                    user.save(function(err) {
-                        done(err, user);
-                    });
-                }
-            });
-        });
-    }
-}));
-
-/**
  * Sign in with Twitter.
  */
-
 passport.use(new TwitterStrategy(secrets.twitter, function(req, accessToken, tokenSecret, profile, done) {
-    if (req.user) {
-        User.findOne({
-            twitter: profile.id
-        }, function(err, existingUser) {
-            if (existingUser) {
-                req.flash('errors', {
-                    msg: 'There is already a Twitter account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
-                });
-                done(err);
-            } else {
-                User.findById(req.user.id, function(err, user) {
-                    user.twitter = profile.id;
-                    user.tokens.push({
-                        kind: 'twitter',
-                        accessToken: accessToken,
-                        tokenSecret: tokenSecret
-                    });
-                    user.profile.name = user.profile.name || profile.displayName;
-                    user.profile.location = user.profile.location || profile._json.location;
-                    user.profile.picture = user.profile.picture || profile._json.profile_image_url_https;
-                    user.save(function(err) {
-                        req.flash('info', {
-                            msg: 'Twitter account has been linked.'
-                        });
-                        done(err, user);
-                    });
-                });
-            }
-        });
-
-    } else {
-        User.findOne({
-            twitter: profile.id
-        }, function(err, existingUser) {
-            if (existingUser) return done(null, existingUser);
-            var user = new User();
-            // Twitter will not provide an email address.  Period.
-            // But a person’s twitter username is guaranteed to be unique
-            // so we can "fake" a twitter email address as follows:
-            user.email = profile.username + "@twitter.com";
-            user.twitter = profile.id;
-            user.tokens.push({
+    Users.findOne({
+        phone: req.body.phone
+    }, (err, existingUser) => {
+        if (existingUser && existingUser.twitter) {
+            // There's already an Twitter account associated with this user.
+            req.flash('errors', {
+                msg: 'There is already a Twitter account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
+            });
+            done(err);
+        } else if (existingUser) {
+            // User already exists but does not have their Instagram account
+            // attached.
+            existingUser.twitter = profile.id;
+            existingUser.tokens.push({
                 kind: 'twitter',
-                accessToken: accessToken,
-                tokenSecret: tokenSecret
+                accessToken: accessToken
             });
-            user.profile.name = profile.displayName;
-            user.profile.location = profile._json.location;
-            user.profile.picture = profile._json.profile_image_url_https;
-            user.save(function(err) {
-                done(err, user);
+
+            existingUser.save(function(err) {
+                req.flash('info', {
+                    msg: 'Twitter account has been linked.'
+                });
+                done(err, existingUser);
             });
-        });
-    }
+        } else {
+            req.flash('errors', {
+                msg: 'An account must be created first using Facebook.'
+            });
+            done(err);
+        }
+    });
 }));
