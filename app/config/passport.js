@@ -22,7 +22,7 @@ passport.deserializeUser((id, done) => {
  */
 passport.use(new FacebookStrategy(secrets.facebook, (req, accessToken, refreshToken, profile, done) => {
     Users.findOne({
-        phone: req.body.phone
+        phone: req.params.phone
     }, (err, existingUser) => {
         if (existingUser && existingUser.facebook) {
             // There's already an Facebook account associated with this user.
@@ -72,7 +72,7 @@ passport.use(new FacebookStrategy(secrets.facebook, (req, accessToken, refreshTo
  */
 passport.use(new InstagramStrategy(secrets.instagram, function(req, accessToken, refreshToken, profile, done) {
     Users.findOne({
-        phone: req.body.phone
+        phone: req.params.phone
     }, (err, existingUser) => {
         if (existingUser && existingUser.instagram) {
             req.flash('errors', {
@@ -109,7 +109,7 @@ passport.use(new InstagramStrategy(secrets.instagram, function(req, accessToken,
  */
 passport.use(new TwitterStrategy(secrets.twitter, (req, accessToken, tokenSecret, profile, done) => {
     Users.findOne({
-        phone: req.body.phone
+        phone: req.params.phone
     }, (err, existingUser) => {
         if (existingUser && existingUser.twitter) {
             // There's already an Twitter account associated with this user.
