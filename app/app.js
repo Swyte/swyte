@@ -34,6 +34,10 @@ app.use(session({
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 
+// view engine setup
+app.set('views', (__dirname + '/views'));
+app.set('view engine', 'jade');
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
         extended: false
