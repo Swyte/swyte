@@ -10,7 +10,6 @@ let passport = require('passport');
 let config = require('../config');
 
 var app = express();
-var routes = require('./routes.js');
 
 // Connect to test database (hh for HackHarvard)
 mongoose.connect(config.mongoUrl);
@@ -43,7 +42,5 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 module.exports = app;
-
-app.use('/', routes);
 
 app.listen(3000);

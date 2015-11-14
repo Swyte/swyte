@@ -1,11 +1,7 @@
 'use strict';
 
-let express = require('express');
-var router = express.Router();
+var app = require('./app.js');
 
-
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.status(200).send();
 });
-
-module.export = router;
