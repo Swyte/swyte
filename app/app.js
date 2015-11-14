@@ -49,7 +49,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.get('/', routes.index);
-app.get('/portfolio', routes.profile);
+app.get('/profile', routes.profile);
 app.post("/text", routes.text);
 
 app.listen(3000);

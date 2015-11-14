@@ -6,7 +6,7 @@ exports.index = (req, res) => {
 };
 
 exports.profile = (req, res) => {
-	res.render('portfolio');
+	res.render('profile');
 };
 
 exports.text = (req, res) => {
