@@ -14,6 +14,7 @@ exports.text = (req, res) => {
 				console.log("No Facebook account found");
 				res.send("<Response><Message>Welcome back, we still need permission to access your Facebook account. https://fb.com/auth</Message></Response>");
 			} else { // Account found and Facebook attached
+						   /* -----------------------------TEMPLATES ----------------------------- */
 				wit(req.body.Body, function (err, response) {
 					if(!err && response) { // Handle templates, no error and response is valid
 						console.log("Length: " + Object.keys(response.outcomes[0].entities).length);
@@ -27,6 +28,7 @@ exports.text = (req, res) => {
 						}
 					}
 				});
+						  /* -----------------------------TEMPLATES ----------------------------- */
 			}
 		} else { // Not found, register new user
 			var adduser = new Users({
@@ -44,9 +46,4 @@ exports.text = (req, res) => {
 			});
 		}
 	});
-    // wit(req.body.Body, function (err, res) {
-    // 	if(!err){
-    // 		console.log(res);
-    // 	}
-    // });
 };
