@@ -35,7 +35,7 @@ exports.text = (req, res) => {
 				/* -----------------------------TEMPLATES ----------------------------- */
 			}
 		} else { // Not found, register new user
-			res.send(`<Response><Message>To get started, we need access to your Facebook account. https://9c137715.ngrok.io/auth/facebook?phone=${req.body.From}</Message></Response>`);
+			res.send(`<Response><Message>To get started, we need access to your Facebook account. https://9c137715.ngrok.io/auth/facebook?phone=${req.body.From.replace("+","")}</Message></Response>`);
 		}
 	});
 };
