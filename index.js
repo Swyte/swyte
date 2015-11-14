@@ -7,10 +7,9 @@ let session = require('express-session');
 let mongoose = require('mongoose');
 let MongoStore = require('connect-mongo')(session);
 let passport = require('passport');
-let config = require('../config');
+let config = require('./config');
 
 var app = express();
-var routes = require('./routes.js');
 
 // Connect to test database (hh for HackHarvard)
 mongoose.connect(config.mongoUrl);
@@ -41,7 +40,5 @@ app.use(bodyParser.urlencoded({
 
 // parse application/json
 app.use(bodyParser.json());
-
-module.exports = app;
 
 app.listen(3000);
