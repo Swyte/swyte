@@ -12,7 +12,7 @@ exports.text = (req, res) => {
 		if(!err && user){ // Found
 			if(user.facebook === '') { // Account not yet attached
 				console.log("No Facebook account found");
-				res.send("<Response><Message>Welcome back, we still need permission to access your Facebook account. https://localhost:3000/auth/facebook</Message></Response>");
+				res.send("<Response><Message>Welcome back, we still need permission to access your Facebook account. https://9c137715.ngrok.io/auth/facebook</Message></Response>");
 			} else { // Account found and Facebook attached
 						   /* -----------------------------TEMPLATES ----------------------------- */
 				wit(req.body.Body, function (err, response) {
@@ -31,7 +31,7 @@ exports.text = (req, res) => {
 						  /* -----------------------------TEMPLATES ----------------------------- */
 			}
 		} else { // Not found, register new user
-			res.send("<Response><Message>To get started, we need access to your Facebook account. https://localhost:3000/auth/facebook</Message></Response>");
+			res.send("<Response><Message>To get started, we need access to your Facebook account. https://9c137715.ngrok.io/auth/facebook</Message></Response>");
 		}
 	});
 };
