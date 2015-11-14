@@ -1,5 +1,5 @@
 exports.index = (req, res) => {
-    res.send("Hello");
+    res.render('index', {title: 'Meow', message: 'Meow again'});
 };
 
 exports.text = (req, res) => {
