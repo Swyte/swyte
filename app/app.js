@@ -7,7 +7,7 @@ let session = require('express-session');
 let mongoose = require('mongoose');
 let MongoStore = require('connect-mongo')(session);
 let passport = require('passport');
-let config = require('../config');
+let config = require('./config/config');
 let routes = require('./routes');
 
 var app = express();
