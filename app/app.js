@@ -7,9 +7,11 @@ let session = require('express-session');
 let mongoose = require('mongoose');
 let MongoStore = require('connect-mongo')(session);
 let passport = require('passport');
+let flash = require('express-flash');
 let config = require('./config/config');
 let routes = require('./routes');
 
+// Require other modules.
 require('./config/passport');
 
 var app = express();
@@ -36,13 +38,16 @@ app.use(session({
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 
+app.use(passport.initialize());
+app.use(flash());
+
 // view engine setup
 app.set('views', (__dirname + '/views'));
 app.set('view engine', 'jade');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
-        extended: false
+    extended: false
 }));
 
 // parse application/json
@@ -51,5 +56,8 @@ app.use(bodyParser.json());
 app.get('/', routes.index);
 app.get('/profile', routes.profile);
 app.post("/text", routes.text);
-
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_location'] }));
+app.get('/auth/facebook/callback', passport.authenticate('facebook'), (req, res) => {
+    console.log('success');
+});
 app.listen(3000);
