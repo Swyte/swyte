@@ -1,3 +1,4 @@
+/*global require, __dirname*/
 'use strict';
 
 var app = require('./app.js');
