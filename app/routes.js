@@ -14,11 +14,24 @@ exports.text = (req, res) => {
 				console.log("No Facebook account found");
 				res.send("<Response><Message>Welcome back, we still need permission to access your Facebook account. https://fb.com/auth</Message></Response>");
 			} else { // Account found and Facebook attached
-				// Where all the code will go.
+				wit(req.body.Body, function (err, response) {
+					if(!err && response) { // Handle templates, no error and response is valid
+						console.log("Length: " + Object.keys(response.outcomes[0].entities).length);
+						console.log("WIT RESPONSE: " + JSON.stringify(response));
+						if(Object.keys(response.outcomes[0].entities).length === 1){ // Only one item  
+							res.send("<Response><Message>Great, I'm creating your website now.</Message></Response>");
+						} else if(Object.keys(response.outcomes[0].entities).length > 1){
+							res.send("<Response><Message>Looks like you might have picked more than one template!</Message></Response>");
+						} else if(Object.keys(response.outcomes[0].entities).length < 1){
+							res.send("<Response><Message>I didn't quite catch that, we have x, y and z templates available for use, for free.</Message></Response>");
+						}
+					}
+				});
 			}
 		} else { // Not found, register new user
 			var adduser = new Users({
-				phone: req.body.From
+				phone: req.body.From,
+				facebook: "auth"
 			});
 			adduser.save(function (err) {
 				if(err) {
