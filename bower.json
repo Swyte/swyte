@@ -1,0 +1,22 @@
+{
+  "name": "HackHarvard",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Alberto Scicali <afs2842@rit.edu>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/HermesHack/sms-web-generator",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}

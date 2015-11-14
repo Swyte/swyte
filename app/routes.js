@@ -5,6 +5,10 @@ exports.index = (req, res) => {
     res.render('index', {title: 'Meow', message: 'Meow again'});
 };
 
+exports.profile = (req, res) => {
+	res.render('profile');
+};
+
 exports.text = (req, res) => {
 	Users.findOne({
 		phone: req.body.From
@@ -31,7 +35,8 @@ exports.text = (req, res) => {
 				/* -----------------------------TEMPLATES ----------------------------- */
 			}
 		} else { // Not found, register new user
-			res.send("<Response><Message></Message></Response>");
+			res.send("<Response><Message>To get started, we need access to your Facebook account. https://localhost:3000/auth/facebook</Message></Response>");
 		}
 	});
 };
+
