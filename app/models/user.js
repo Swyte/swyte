@@ -6,7 +6,8 @@ var userSchema = new mongoose.Schema({
     facebook: { type: String, default: ''},
     twitter: {type: String, default: ''},
     instagram: {type: String, default: ''},
-
+    tokens: Array,
+    
     profile: {
       name: { type: String, default: '' },
       gender: { type: String, default: '' },

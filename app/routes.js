@@ -2,6 +2,7 @@
 let wit = require('../wit');
 let Users = require('./models/user');
 let controllers = require('./controllers/controllers.js');
+let passport = require('passport');
 
 exports.index = function(req, res) {
     res.render('index', {
@@ -11,7 +12,7 @@ exports.index = function(req, res) {
 };
 
 exports.oauth = function(req, res) {
-    res.render('auth');
+    res.render('facebook');
 };
 
 exports.profile = function(req, res) {
@@ -27,11 +28,11 @@ exports.profile = function(req, res) {
 exports.text = function(req, res) {
     console.log('poo' + JSON.stringify(req.body));
     Users.findOne({
-        phone: req.body.From
+        phone: req.body.From.replace("+","")
     }, (err, user) => {
         console.log('poo2' + req.body.Body);
         if (!err && user) { // Found
-            if (user.facebook === '') { // Account not yet attached
+            if (!user.facebook) { // Account not yet attached
                 console.log("No Facebook account found");
                 res.send(`<Response><Message>Welcome back, we still need permission to access your Facebook account. http://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
             } else { // Account found and Facebook attached
