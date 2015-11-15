@@ -20,16 +20,16 @@ passport.deserializeUser((id, done) => {
 /**
  * Sign in with Facebook.
  */
-passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, refreshToken, profile, done) {
+passport.use(new FacebookStrategy(secrets.facebook, (req, accessToken, refreshToken, profile, done) => {
     Users.findOne({
-        phone: req.body.phone
+        phone: req.query.phone
     }, (err, existingUser) => {
         if (existingUser && existingUser.facebook) {
             // There's already an Facebook account associated with this user.
             req.flash('errors', {
                 msg: 'There is already a Facebook account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
             });
-            done(err);
+            done(err, existingUser);
         } else if (existingUser) {
             // User already exists but does not have their Facebook account
             // attached.
@@ -42,7 +42,7 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
             user.profile.name = profile.displayName;
             user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
             user.profile.location = (profile._json.location) ? profile._json.location.name : '';
-            existingUser.save(function(err) {
+            existingUser.save(err => {
                 req.flash('info', {
                     msg: 'Facebook account has been linked.'
                 });
@@ -60,7 +60,7 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
             user.profile.name = profile.displayName;
             user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
             user.profile.location = (profile._json.location) ? profile._json.location.name : '';
-            user.save(function(err) {
+            user.save(err => {
                 done(err, user);
             });
         }
@@ -72,7 +72,7 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
  */
 passport.use(new InstagramStrategy(secrets.instagram, function(req, accessToken, refreshToken, profile, done) {
     Users.findOne({
-        phone: req.body.phone
+        phone: req.params.phone
     }, (err, existingUser) => {
         if (existingUser && existingUser.instagram) {
             req.flash('errors', {
@@ -107,9 +107,9 @@ passport.use(new InstagramStrategy(secrets.instagram, function(req, accessToken,
 /**
  * Sign in with Twitter.
  */
-passport.use(new TwitterStrategy(secrets.twitter, function(req, accessToken, tokenSecret, profile, done) {
+passport.use(new TwitterStrategy(secrets.twitter, (req, accessToken, tokenSecret, profile, done) => {
     Users.findOne({
-        phone: req.body.phone
+        phone: req.params.phone
     }, (err, existingUser) => {
         if (existingUser && existingUser.twitter) {
             // There's already an Twitter account associated with this user.
