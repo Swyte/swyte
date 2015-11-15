@@ -40,6 +40,7 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
                     user.profile.name = user.profile.name || profile.displayName;
                     user.profile.gender = user.profile.gender || profile._json.gender;
                     user.profile.picture = user.profile.picture || 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
+                    user.profile.label = profile.displayName; // Added Label
                     user.save(function(err) {
                         req.flash('info', {
                             msg: 'Facebook account has been linked.'
@@ -65,6 +66,7 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
                 user.profile.gender = profile._json.gender;
                 user.profile.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
                 user.profile.location = (profile._json.location) ? profile._json.location.name : '';
+                user.profile.label = profile.displayName; // Added Label
                 user.save(function(err) {
                     done(err, user);
                 });
