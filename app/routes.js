@@ -44,7 +44,7 @@ exports.text = function(req, res) {
                         //console.log("WIT RESPONSE: " + JSON.stringify(response));
                         console.log("USER: " + user);
                         if (Object.keys(response.outcomes[0].entities).length === 1) { // Only one item  
-                            res.send("<Response><Message>You can check out your site at http://swyte.xyz/" + user.profile.label.replace(" ", "") + "</Message></Response>");
+                            res.send("<Response><Message>You can check out your site at http://swyte.xyz/" + user.profile.label + "</Message></Response>");
                         } else if (Object.keys(response.outcomes[0].entities).length > 1) {
                             res.send("<Response><Message>Looks like you might have picked more than one template!</Message></Response>");
                         } else if (Object.keys(response.outcomes[0].entities).length < 1) {
@@ -56,13 +56,6 @@ exports.text = function(req, res) {
             }
         } else { // Not found, register new user
             res.send(`<Response><Message>To get started, we need access to your Facebook account. https://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
-            var newuser = new Users({ phone: req.body.From });
-            newuser.save(function (err) {
-            	if(err) {
-            		console.log("Error " + err);
-            	}
-            	console.log("New User: " + user);
-            });
         }
     });
 };
