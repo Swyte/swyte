@@ -18,7 +18,7 @@
         $stateProvider
             .state('facebook', {
                 url: '/facebook/:number?success',
-                template: '<div class="text-center" ng-init="auth.doFacebook()">auth.message</div>',
+                template: '<div class="center-text" ng-init="auth.doFacebook()">{{auth.message}}</div>',
                 controller: 'AuthCtrl',
                 controllerAs: 'auth'
             });
