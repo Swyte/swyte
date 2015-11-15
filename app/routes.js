@@ -32,7 +32,7 @@ exports.text = function(req, res) {
     }, (err, user) => {
     	console.log("USER: " + user);
         if (!err && user) { // Found
-            if (!user.facebook) { // Account not yet attached
+            if (user.facebook === '') { // Account not yet attached
                 console.log("No Facebook account found");
                 res.send(`<Response><Message>Welcome back, we still need permission to access your Facebook account. http://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
             } else { // Account found and Facebook attached
