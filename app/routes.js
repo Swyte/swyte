@@ -20,6 +20,7 @@ exports.profile = function(req, res) {
         if (!user) {
             res.redirect('/');
         } else {
+        	console.dir(user);
             res.render('profile', user);
         }
     });
