@@ -22,9 +22,11 @@ exports.profile = function(req, res){
 };
 
 exports.text = function(req, res){
+    console.log('poo' + req.body.Body);
 	Users.findOne({
 		phone: req.body.From
 	}, (err, user) => {
+        console.log('poo2' + req.body.Body);
 		if(!err && user){ // Found
 			if(user.facebook === '') { // Account not yet attached
 				console.log("No Facebook account found");
