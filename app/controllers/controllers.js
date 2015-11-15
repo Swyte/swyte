@@ -42,7 +42,6 @@ exports.facebookGET = (req, res, cb) => {
             			}
             			return cb(result);
                 	});
-                        //http://graph.facebook.com/1681904084/picture?type=large
                 } else {
                         return cb();
                 }
