@@ -2,6 +2,7 @@
 let wit = require('../wit');
 let Users = require('./models/user');
 let controllers = require('./controllers/controllers.js');
+let passport = require('passport');
 
 exports.index = function(req, res) {
     res.render('index', {
