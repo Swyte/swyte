@@ -16,6 +16,7 @@
     "express": "^4.13.3",
     "express-flash": "0.0.2",
     "express-session": "^1.12.1",
+    "fb": "^0.7.3",
     "jade": "^1.11.0",
     "mongoose": "^4.2.5",
     "passport": "^0.3.2",

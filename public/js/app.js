@@ -11,7 +11,7 @@
         $stateProvider
             .state('facebook', {
                 abstract: true,
-                url: '/facebook/?number&success',
+                url: '/facebook/?number&?success',
                 templateUrl: 'views/facebook-auth.html',
                 controller: 'AuthCtrl'
             });
