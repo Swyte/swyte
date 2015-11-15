@@ -18,7 +18,7 @@
         $stateProvider
             .state('facebook', {
                 url: '/facebook/:number?success',
-                template: '<div ng-init="auth.doFacebook()"></div>',
+                template: '<div class="container center-text"><div class="center-text index-header" ng-init="auth.doFacebook()">{{auth.message}}</div></div>',
                 controller: 'AuthCtrl',
                 controllerAs: 'auth'
             });
@@ -35,6 +35,7 @@
             console.log($state.params);
             if ($state.params.success) {
                 console.log('Adding phone number');
+                self.message = "Success";
                 $http.put('/phone', { phone: $state.params.number }).then(function(res) {
                     console.log('winner');
                 });
