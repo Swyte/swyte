@@ -30,19 +30,21 @@ exports.text = function(req, res) {
     Users.findOne({
         phone: req.body.From.replace("+","")
     }, (err, user) => {
-        console.log('poo2' + req.body.Body);
+    	console.log("USER: " + user);
         if (!err && user) { // Found
-            if (!user.facebook) { // Account not yet attached
+            if (user.facebook === '') { // Account not yet attached
                 console.log("No Facebook account found");
                 res.send(`<Response><Message>Welcome back, we still need permission to access your Facebook account. http://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
             } else { // Account found and Facebook attached
+            	console.log("Hit ELSE");
                 /* -----------------------------TEMPLATES ----------------------------- */
                 wit(req.body.Body, function(err, response) {
                     if (!err && response) { // Handle templates, no error and response is valid
-                        console.log("Length: " + Object.keys(response.outcomes[0].entities).length);
-                        console.log("WIT RESPONSE: " + JSON.stringify(response));
+                        //console.log("Length: " + Object.keys(response.outcomes[0].entities).length);
+                        //console.log("WIT RESPONSE: " + JSON.stringify(response));
+                        console.log("USER: " + user);
                         if (Object.keys(response.outcomes[0].entities).length === 1) { // Only one item  
-                            res.send("<Response><Message>Great, I'm creating your website now.</Message></Response>");
+                            res.send("<Response><Message>You can check out your site at http://swyte.xyz/" + user.profile.label + "</Message></Response>");
                         } else if (Object.keys(response.outcomes[0].entities).length > 1) {
                             res.send("<Response><Message>Looks like you might have picked more than one template!</Message></Response>");
                         } else if (Object.keys(response.outcomes[0].entities).length < 1) {
@@ -53,7 +55,7 @@ exports.text = function(req, res) {
                 /* -----------------------------TEMPLATES ----------------------------- */
             }
         } else { // Not found, register new user
-            res.send(`<Response><Message>To get started, we need access to your Facebook account. http://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
+            res.send(`<Response><Message>To get started, we need access to your Facebook account. https://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
         }
     });
 };

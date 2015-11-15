@@ -6,6 +6,7 @@ let FacebookStrategy = require('passport-facebook').Strategy;
 let TwitterStrategy = require('passport-twitter').Strategy;
 let secrets = require('./secrets');
 let User = require('../models/user');
+let sendmsg = require('./sendmsg');
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
