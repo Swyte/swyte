@@ -44,7 +44,7 @@ exports.text = function(req, res) {
                         //console.log("WIT RESPONSE: " + JSON.stringify(response));
                         console.log("USER: " + user);
                         if (Object.keys(response.outcomes[0].entities).length === 1) { // Only one item  
-                            res.send("<Response><Message>You can check out your site at http://swyte.xyz/" + encodeURIComponent(user.profile.label) + "</Message></Response>");
+                            res.send("<Response><Message>You can check out your site at http://swyte.xyz/profile/" + encodeURIComponent(user.profile.label) + "</Message></Response>");
                         } else if (Object.keys(response.outcomes[0].entities).length > 1) {
                             res.send("<Response><Message>Looks like you might have picked more than one template!</Message></Response>");
                         } else if (Object.keys(response.outcomes[0].entities).length < 1) {
