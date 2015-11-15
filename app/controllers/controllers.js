@@ -5,10 +5,12 @@ let Users = require('../models/user.js');
 let FB = require('fb');
 
 exports.facebookGET = (req, res) => {
+	console.dir(req.params.label);
 	Users.findOne({
-		_id: req.param.label
+		"profile.label": req.params.label
 	}, function(err, user) {
 		if (user && user.facebook) {
+			console.log("User inner " + user);
 			FB.api(user.id, res => {
 				if (!res || res.error) {
 					console.log(!res ? 'error occurred' : res.error);

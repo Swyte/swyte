@@ -55,10 +55,10 @@ app.use(bodyParser.json());
 
 app.get('/', routes.index);
 //app.get('/profile', routes.profile);
-app.get('/:label', routes.profile);
 app.post("/text", routes.text);
 app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback', passport.authenticate('facebook'), (req, res) => {
     console.log('success');
 });
+app.get('/:label', routes.profile);
 app.listen(3000);
