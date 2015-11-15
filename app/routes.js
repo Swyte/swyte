@@ -48,3 +48,54 @@ exports.text = function(req, res){
 	});
 };
 
+/**
+ * OAuth provider call
+ */
+exports.oauthCall = function(strategy, scope) {
+    return function(req, res, next) {
+        // Set redirection path on session.
+        // Do not redirect to a signin or signup page
+        req.session.redirect_to = req.query.redirect_to;
+        // Authenticate
+        passport.authenticate(strategy, scope)(req, res, next);
+    };
+};
+
+exports.oauthCallback = function(strategy) {
+    return function(req, res, next) {
+        // Pop redirect URL from session
+        var sessionRedirectURL = req.session.redirect_to;
+        delete req.session.redirect_to;
+
+        passport.authenticate(strategy, function(err, user, redirectURL) {
+            if (err) {
+                console.log(err);
+                return res.redirect('/authentication/signin?err=' + encodeURIComponent(err));
+            }
+            if (!user) {
+                return res.redirect('/error.html');
+            }
+            req.login(user, function(err) {
+                if (err) {
+                    console.log(err);
+                    return res.redirect('/error.html');
+                }
+
+                return res.redirect(redirectURL || sessionRedirectURL + '?success=true' || '/');
+            });
+        })(req, res, next);
+    };
+};
+
+exports.phone = function(req, res) {
+    Users.findOne({
+        _id: req.user._id
+    }, function(err, user) {
+        if (err || !user) {
+
+        } else {
+            user.phone = req.body.phone;
+            user.save();
+        }
+    });
+};

@@ -38,27 +38,22 @@ app.use(session({
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 
+// parse application/json
+app.use(bodyParser.json());
+
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 
 // view engine setup
 app.set('views', (__dirname + '/views'));
 app.set('view engine', 'jade');
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-
-// parse application/json
-app.use(bodyParser.json());
-
 app.get('/', routes.index);
-//app.get('/profile', routes.profile);
-app.post("/text", routes.text);
-app.get('/auth/facebook', passport.authenticate('facebook'));
-app.get('/auth/facebook/callback', passport.authenticate('facebook'), (req, res) => {
-    console.log('success');
-});
-app.get('/:label', routes.profile);
+app.get('/profile', routes.profile);
+app.post('/text', routes.text);
+app.get('/oauth', routes.oauth);
+app.put('/phone', routes.phone);
+app.get('/auth/facebook', routes.oauthCall('facebook'));
+app.get('/auth/facebook/callback', routes.oauthCallback('facebook'));
 app.listen(3000);
