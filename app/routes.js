@@ -11,7 +11,7 @@ exports.index = function(req, res) {
 };
 
 exports.oauth = function(req, res) {
-    res.render('auth');
+    res.render('facebook');
 };
 
 exports.profile = function(req, res) {
