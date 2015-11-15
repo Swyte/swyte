@@ -1,5 +1,21 @@
 .profile-nav-bar {
-	font: 100 3rem 'Helvetica Neue', Arial, sans-serif;
-	padding: 15px 0 15px 20px;
-	letter-spacing: 0.6rem;
+	padding: 10px 0 10px 20px;
+}
+
+.navbar-logo {
+	font: 100 2rem 'Helvetica Neue', Arial, sans-serif;
+	letter-spacing: 0.3rem;
+	color: #fff;
+	text-decoration: none !important;
+}
+
+.navbar-logo:hover {
+	color: #fff;
+}
+
+.profile-panel-one {
+}
+
+.profile-picture {
+	width: 200px;
 }

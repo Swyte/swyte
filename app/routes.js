@@ -13,6 +13,7 @@ exports.oauth = function(req, res){
 
 exports.profile = function(req, res){
 	controllers.facebookGET(req, res, function(user) {
+		console.dir(user);
 			if (!user) {
 				res.redirect('/');
 			} else {
