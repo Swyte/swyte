@@ -28,7 +28,7 @@ exports.profile = function(req, res) {
 exports.text = function(req, res) {
     console.log('poo' + JSON.stringify(req.body));
     Users.findOne({
-        phone: req.body.From
+        phone: req.body.From.replace("+","")
     }, (err, user) => {
         console.log('poo2' + req.body.Body);
         if (!err && user) { // Found
