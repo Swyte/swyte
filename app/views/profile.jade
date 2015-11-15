@@ -16,10 +16,9 @@ block content
 				div.col-md-6
 					<!-- Social Links go here -->
 			div.col-lg-3
-				h1 #{profile.name}
-				h3 #{profile.email}
+				div.profile-name #{profile.name}
 			div.col-lg-3
-				h3 #{profile.hometown.name}
-				h3 #{profile.education}
-		div.row
+				</br>
+				div.profile-email #{profile.email}
+				div.profile-hometown #{profile.hometown.name}
 		block profile-addon
