@@ -55,7 +55,7 @@ exports.text = function(req, res) {
                 /* -----------------------------TEMPLATES ----------------------------- */
             }
         } else { // Not found, register new user
-            res.send(`<Response><Message>To get started, we need access to your Facebook account. https://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
+            res.send(`<Response><Message>To get started, we need access to your Facebook account. http://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
         }
     });
 };
