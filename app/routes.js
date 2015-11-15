@@ -22,7 +22,7 @@ exports.profile = function(req, res){
 };
 
 exports.text = function(req, res){
-    console.log('poo' + req.body);
+    console.log('poo' + JSON.stringify(req.body));
 	Users.findOne({
 		phone: req.body.From
 	}, (err, user) => {
