@@ -13,16 +13,16 @@ exports.oauth = function(req, res){
 
 exports.profile = function(req, res){
 	controllers.facebookGET(req, res, function(user) {
-			if (!user) {
-				res.redirect('/');
-			} else {
-				res.render('profile', user);				
-			}
+		if (!user) {
+			res.redirect('/');
+		} else {
+			res.render('profile', user);				
+		}
 	});
 };
 
 exports.text = function(req, res){
-    console.log('poo' + req.body.Body);
+    console.log('poo' + req.body);
 	Users.findOne({
 		phone: req.body.From
 	}, (err, user) => {
