@@ -60,7 +60,8 @@ header {
 
 .testimonials {
 	font: 200 1.5rem 'Helvetica Neue', Arial, sans-serif;	
-	letter-spacing: 0.08rem;
+	letter-spacing: 0.1rem;
+	line-height: 2.3rem;
 	padding: 0 30px 40px 30px;
 }
 
