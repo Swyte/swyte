@@ -12,7 +12,9 @@ exports.index = function(req, res){
 // };
 
 exports.profile = function(req, res){
-	res.render('profile', controllers.facebookGET(req, res));
+	controllers.facebookGET(req, res, function(user) {
+			res.render('profile', user);
+	});
 };
 
 exports.text = function(req, res){

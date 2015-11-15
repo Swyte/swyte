@@ -4,25 +4,21 @@ let http = require('https');
 let Users = require('../models/user.js');
 let FB = require('fb');
 
-exports.facebookGET = (req, res) => {
+exports.facebookGET = (req, res, cb) => {
 	Users.findOne({
 		"profile.label": req.params.label
 	}, function(err, user) {
 		if (user && user.facebook) {
-			FB.api("/me?access_token=CAACEdEose0cBAFebwqEJEZCZBA60vbUyvTknoJHyNUXPN0ZBxH9M6zNAqewHMKROwNHK2MklsqWoAeP6RoTAvuvwgAjqcs7XfKZBIoGPdqAwfzyXYJd7yy6PBkEI7JVLoZBNiMBCUinnWLBpsZCbEtzCZBG0Fw8ZAB647eZAZBVgphqiKi5Nxharmv8lievA9jJuKz0rCZBWq6NjCj15c6GtnBOBAVgELGfdgIZD", res => {
+			FB.api("/me?access_token=CAACEdEose0cBAFQ0qFkCrfzU69F7LUNKcrzzZCuevuYVGLPu25tqzaYNinhk2hsuY3V1FWxMZAxoAbr7U6PWQJx6t0s0RFaZCZAjf9WCy3S6rnZCNnyw3dD77GG7rJjEqtUqZCrT3dxF6kAKEFBd4hk1ZBdDiw0rBhLCyZCzZCQzG3SlnZC5gkJiAKEKqp8ZACdZB5rLRZAK8xiyTBke087m9syb5QYbihwGSIv8ZD", res => {
 				if (!res || res.error) {
 					console.log(!res ? 'error occurred' : res.error);
-					return null;
-				} else {
-					console.log(res.id);
-					console.log(res.name);
-					return { user:res };
+					return cb();
 				}
+				console.log(JSON.stringify(res));
+				return cb(res);
 			});
 		} else {
-			console.log('meow');
-			console.log(err);
-			return null;
+			return cb();
 		}
 	});
 };
