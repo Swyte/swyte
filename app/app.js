@@ -56,7 +56,4 @@ app.get('/oauth', routes.oauth);
 app.put('/phone', routes.phone);
 app.get('/auth/facebook', routes.oauthCall('facebook'));
 app.get('/auth/facebook/callback', routes.oauthCallback('facebook'));
-app.get('/*', function(req, res) {
-    res.redirect('/');
-});
 app.listen(config.port);
