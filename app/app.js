@@ -55,7 +55,7 @@ app.set('views', (__dirname + '/views'));
 app.set('view engine', 'jade');
 
 app.get('/', routes.index);
-app.get('/:label', routes.profile);
+app.get('/profile/:label', routes.profile);
 app.post('/text', routes.text);
 app.get('/oauth', routes.oauth);
 app.put('/phone', routes.phone);

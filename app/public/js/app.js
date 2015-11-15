@@ -45,6 +45,7 @@
 
         this.callOauthProvider = function(url) {
             if ($state && $state.href($state.current.name, $state.params, {absolute: true})) {
+                $state.href($state.current.name, $state.params, {absolute: true});
                 url += '?redirect_to=' + encodeURIComponent($state.href($state.current.name, $state.params, {absolute: true}).replace('\/\#\!\/', '\/oauth\/\#\!\/'));
             }
 

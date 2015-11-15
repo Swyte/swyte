@@ -2,6 +2,7 @@
 let wit = require('../wit');
 let Users = require('./models/user');
 let controllers = require('./controllers/controllers.js');
+let passport = require('passport');
 
 exports.index = function(req, res) {
     res.render('index', {
@@ -11,7 +12,7 @@ exports.index = function(req, res) {
 };
 
 exports.oauth = function(req, res) {
-    res.render('auth');
+    res.render('facebook');
 };
 
 exports.profile = function(req, res) {
@@ -27,13 +28,13 @@ exports.profile = function(req, res) {
 exports.text = function(req, res) {
     console.log('poo' + JSON.stringify(req.body));
     Users.findOne({
-        phone: req.body.From
+        phone: req.body.From.replace("+","")
     }, (err, user) => {
     	console.log("USER: " + user);
         if (!err && user) { // Found
-            if (user.facebook === '') { // Account not yet attached
+            if (!user.facebook) { // Account not yet attached
                 console.log("No Facebook account found");
-                res.send(`<Response><Message>Welcome back, we still need permission to access your Facebook account. https://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
+                res.send(`<Response><Message>Welcome back, we still need permission to access your Facebook account. http://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
             } else { // Account found and Facebook attached
             	console.log("Hit ELSE");
                 /* -----------------------------TEMPLATES ----------------------------- */
@@ -54,6 +55,7 @@ exports.text = function(req, res) {
                 /* -----------------------------TEMPLATES ----------------------------- */
             }
         } else { // Not found, register new user
+<<<<<<< HEAD
             res.send(`<Response><Message>To get started, we need access to your Facebook account. https://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
             var newuser = new Users({ phone: req.body.From });
             newuser.save(function (err) {
@@ -62,6 +64,9 @@ exports.text = function(req, res) {
             	}
             	console.log("New User: " + user);
             });
+=======
+            res.send(`<Response><Message>To get started, we need access to your Facebook account. http://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
+>>>>>>> 21f4537f49cc26a7c90f33b6e91eb48d00fa6f14
         }
     });
 };

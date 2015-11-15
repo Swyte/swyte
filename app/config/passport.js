@@ -30,6 +30,7 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
                 req.flash('errors', {
                     msg: 'There is already a Facebook account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
                 });
+                console.log("foooo");
                 done(err, existingUser);
             } else {
                 User.findById(req.user.id, function(err, user) {
@@ -49,13 +50,14 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
                         done(err, user);
                     });
                 });
+                console.log("boooo");
             }
         });
     } else {
         User.findOne({
             facebook: profile.id
         }, function(err, existingUser) {
-            if (!user) {
+            if (!existingUser) {
                 var user = new User();
                 user.email = profile._json.email;
                 user.facebook = profile.id;
@@ -72,7 +74,7 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
                     done(err, user);
                 });
             } else {
-                done(err, user);
+                done(err, existingUser);
             }
         });
     }
