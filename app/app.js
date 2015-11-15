@@ -59,4 +59,4 @@ app.get('/auth/facebook/callback', routes.oauthCallback('facebook'));
 app.get('/*', function(req, res) {
     res.redirect('/');
 });
-app.listen(3000);
+app.listen(config.port);
