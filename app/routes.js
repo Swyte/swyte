@@ -11,13 +11,13 @@ exports.oauth = function(req, res){
     res.render('auth');
 };
 
-// exports.profile = (req, res) => {
-// 	res.render('profile');
-// };
-
 exports.profile = function(req, res){
 	controllers.facebookGET(req, res, function(user) {
-			res.render('profile', user);
+			if (!user) {
+				res.redirect('/');
+			} else {
+				res.render('profile', user);				
+			}
 	});
 };
 

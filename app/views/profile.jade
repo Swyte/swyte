@@ -1,16 +1,20 @@
 extends ./layout.jade
 
 block content
+	header.splash-img
+		div.container-fluid.profile-nav-bar 
+			span 
+				a(href='/') Swyte
 	div.container
 		div.row
 			div.col-md-6
 				div.col-md-offset-1.col-md-5
-					<!-- Profile image goes here -->
+					img(src='http://graph.facebook.com/#{profile.id}/picture?type=large' alt='Profile Picture')
 				div.col-md-6
 					<!-- Social Links go here -->
 			div.col-md-6
-				h1 #{name}
-				p #{bio}
+				h1 #{profile.name}
+				p #{profile.bio}
 
 		block profile-addon
 

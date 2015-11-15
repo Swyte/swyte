@@ -22,14 +22,23 @@ header {
 	letter-spacing: 0.12rem;
 }
 
+.index-sub-info-header {
+	font: 200 3rem 'Helvetica Neue', Arial, sans-serif;	
+	letter-spacing: 0.12rem;
+	margin: 0 0 60px 0;
+	padding-bottom: 25px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .index-sub-info {
-	font: 200 2.5rem 'Helvetica Neue', Arial, sans-serif;
+	font: 200 2rem 'Helvetica Neue', Arial, sans-serif;
 	letter-spacing: 0.05rem;	
 	line-height: 3.2rem;
+	padding: 0 20px 0 20px;
 }
 
 .index-sub-info > a {
-	font: 200 2.5rem 'Helvetica Neue', Arial, sans-serif;	
+	font: 200 2rem 'Helvetica Neue', Arial, sans-serif;	
 	letter-spacing: 0.12rem;
 }
 
@@ -38,19 +47,21 @@ header {
 }
 
 .index-panel-two > .row {
-	margin: 80px 20px 60px 20px;
+	margin: 90px 20px 60px 20px;
 }
 
 .testimonials-header {
 	font: 200 3rem 'Helvetica Neue', Arial, sans-serif;	
 	letter-spacing: 0.12rem;
-	margin: 0 0 40px 0;
+	margin: 0 0 50px 0;
+	padding-bottom: 25px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .testimonials {
 	font: 200 1.5rem 'Helvetica Neue', Arial, sans-serif;	
 	letter-spacing: 0.08rem;
-	padding: 0 30px 0 30px;
+	padding: 0 30px 40px 30px;
 }
 
 

@@ -50,10 +50,13 @@ app.set('views', (__dirname + '/views'));
 app.set('view engine', 'jade');
 
 app.get('/', routes.index);
-app.get('/profile', routes.profile);
+app.get('/:label', routes.profile);
 app.post('/text', routes.text);
 app.get('/oauth', routes.oauth);
 app.put('/phone', routes.phone);
 app.get('/auth/facebook', routes.oauthCall('facebook'));
 app.get('/auth/facebook/callback', routes.oauthCallback('facebook'));
+app.get('/*', function(req, res) {
+    res.redirect('/');
+});
 app.listen(3000);
