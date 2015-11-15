@@ -1,7 +1,6 @@
 'use strict';
 
 let passport = require('passport');
-let LocalStrategy = require('passport-local').Strategy;
 let InstagramStrategy = require('passport-instagram').Strategy;
 let FacebookStrategy = require('passport-facebook').Strategy;
 let TwitterStrategy = require('passport-twitter').Strategy;
@@ -75,58 +74,6 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
         });
     }
 }));
-
-// /**
-//  * Sign in with Facebook.
-//  */
-// passport.use(new FacebookStrategy(secrets.facebook, (req, accessToken, refreshToken, profile, done) => {
-//     console.log(req.user);
-//     Users.findOne({
-//         phone: req.user.phone
-//     }, (err, existingUser) => {
-//         if (existingUser && existingUser.facebook) {
-//             // There's already an Facebook account associated with this user.
-//             req.flash('errors', {
-//                 msg: 'There is already a Facebook account that belongs to you. Sign in with that account or delete it, then link it with your current account.'
-//             });
-
-//             done(err, existingUser);
-//         } else if (existingUser) {
-//             // User already exists but does not have their Facebook account
-//             // attached.
-//             existingUser.facebook = profile.id;
-//             existingUser.tokens.push({
-//                 kind: 'facebook',
-//                 accessToken: accessToken
-//             });
-
-//             user.profile.name = profile.displayName;
-//             user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
-//             user.profile.location = (profile._json.location) ? profile._json.location.name : '';
-//             existingUser.save(err => {
-//                 req.flash('info', {
-//                     msg: 'Facebook account has been linked.'
-//                 });
-//                 done(err, existingUser);
-//             });
-//         } else {
-//             var user = new Users();
-//             user.phone = req.body.phone;
-//             user.facebook = profile.id;
-//             user.tokens.push({
-//                 kind: 'facebook',
-//                 accessToken: accessToken
-//             });
-
-//             user.profile.name = profile.displayName;
-//             user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
-//             user.profile.location = (profile._json.location) ? profile._json.location.name : '';
-//             user.save(err => {
-//                 done(err, user);
-//             });
-//         }
-//     });
-// }));
 
 // /**
 //  * Sign in with Instagram.

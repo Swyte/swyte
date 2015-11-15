@@ -7,6 +7,10 @@ exports.index = function(req, res){
     res.render('index', {title: 'Meow', message: 'Meow again'});
 };
 
+exports.oauth = function(req, res){
+    res.render('auth');
+};
+
 // exports.profile = (req, res) => {
 // 	res.render('profile');
 // };
