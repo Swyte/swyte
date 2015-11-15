@@ -41,6 +41,11 @@ app.use(express.static(__dirname + '/public'));
 // parse application/json
 app.use(bodyParser.json());
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
