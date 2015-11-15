@@ -41,6 +41,11 @@ app.use(express.static(__dirname + '/public'));
 // parse application/json
 app.use(bodyParser.json());
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -56,7 +61,4 @@ app.get('/oauth', routes.oauth);
 app.put('/phone', routes.phone);
 app.get('/auth/facebook', routes.oauthCall('facebook'));
 app.get('/auth/facebook/callback', routes.oauthCallback('facebook'));
-app.get('/*', function(req, res) {
-    res.redirect('/');
-});
-app.listen(3000);
+app.listen(config.port);

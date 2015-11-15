@@ -1,4 +1,5 @@
 module.exports = {
+    port: 3005,
     mongoUrl: 'mongodb://hackharvard:hackharvard@ds053964.mongolab.com:53964/hh',
     sessionCookie: {
         maxAge: 8640000,

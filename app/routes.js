@@ -3,54 +3,58 @@ let wit = require('../wit');
 let Users = require('./models/user');
 let controllers = require('./controllers/controllers.js');
 
-exports.index = function(req, res){
-    res.render('index', {title: 'Meow', message: 'Meow again'});
+exports.index = function(req, res) {
+    res.render('index', {
+        title: 'Meow',
+        message: 'Meow again'
+    });
 };
 
-exports.oauth = function(req, res){
+exports.oauth = function(req, res) {
     res.render('auth');
 };
 
-exports.profile = function(req, res){
-	controllers.facebookGET(req, res, function(err, user) {
-		console.dir(user);
-			if (err) {
-				res.redirect('/');
-			} else {
-				res.render('profile', user);				
-			}
-	});
+exports.profile = function(req, res) {
+    controllers.facebookGET(req, res, function(user) {
+        if (!user) {
+            res.redirect('/');
+        } else {
+            res.render('profile', user);
+        }
+    });
 };
 
-exports.text = function(req, res){
-	Users.findOne({
-		phone: req.body.From
-	}, (err, user) => {
-		if(!err && user){ // Found
-			if(user.facebook === '') { // Account not yet attached
-				console.log("No Facebook account found");
-				res.send(`<Response><Message>Welcome back, we still need permission to access your Facebook account. https://9c137715.ngrok.io/auth/facebook?phone=${req.body.From}</Message></Response>`);
-			} else { // Account found and Facebook attached
-				/* -----------------------------TEMPLATES ----------------------------- */
-				wit(req.body.Body, function (err, response) {
-					if(!err && response) { // Handle templates, no error and response is valid
-						console.log("Length: " + Object.keys(response.outcomes[0].entities).length);
-						console.log("WIT RESPONSE: " + JSON.stringify(response));
-						if(Object.keys(response.outcomes[0].entities).length === 1){ // Only one item  
-							res.send("<Response><Message>Great, I'm creating your website now.</Message></Response>");
-						} else if(Object.keys(response.outcomes[0].entities).length > 1){
-							res.send("<Response><Message>Looks like you might have picked more than one template!</Message></Response>");
-						} else if(Object.keys(response.outcomes[0].entities).length < 1){
-							res.send("<Response><Message>I didn't quite catch that, we have x, y and z templates available for use, for free.</Message></Response>");
-						}
-					}
-				});
-				/* -----------------------------TEMPLATES ----------------------------- */
-			}
-		} else { // Not found, register new user
-			res.send(`<Response><Message>To get started, we need access to your Facebook account. https://9c137715.ngrok.io/auth/facebook?phone=${req.body.From.replace("+","")}</Message></Response>`);
-		}
-	});
+exports.text = function(req, res) {
+    console.log('poo' + JSON.stringify(req.body));
+    Users.findOne({
+        phone: req.body.From
+    }, (err, user) => {
+        console.log('poo2' + req.body.Body);
+        if (!err && user) { // Found
+            if (user.facebook === '') { // Account not yet attached
+                console.log("No Facebook account found");
+                res.send(`<Response><Message>Welcome back, we still need permission to access your Facebook account. https://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
+            } else { // Account found and Facebook attached
+                /* -----------------------------TEMPLATES ----------------------------- */
+                wit(req.body.Body, function(err, response) {
+                    if (!err && response) { // Handle templates, no error and response is valid
+                        console.log("Length: " + Object.keys(response.outcomes[0].entities).length);
+                        console.log("WIT RESPONSE: " + JSON.stringify(response));
+                        if (Object.keys(response.outcomes[0].entities).length === 1) { // Only one item  
+                            res.send("<Response><Message>Great, I'm creating your website now.</Message></Response>");
+                        } else if (Object.keys(response.outcomes[0].entities).length > 1) {
+                            res.send("<Response><Message>Looks like you might have picked more than one template!</Message></Response>");
+                        } else if (Object.keys(response.outcomes[0].entities).length < 1) {
+                            res.send("<Response><Message>I didn't quite catch that, we have x, y and z templates available for use, for free.</Message></Response>");
+                        }
+                    }
+                });
+                /* -----------------------------TEMPLATES ----------------------------- */
+            }
+        } else { // Not found, register new user
+            res.send(`<Response><Message>To get started, we need access to your Facebook account. https://swyte.xyz/oauth/#!/facebook/${req.body.From.replace("+","")}</Message></Response>`);
+        }
+    });
 };
 
 /**
