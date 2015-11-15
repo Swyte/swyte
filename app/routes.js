@@ -1,21 +1,27 @@
 'use strict';
 let wit = require('../wit');
 let Users = require('./models/user');
-exports.index = (req, res) => {
+let controllers = require('./controllers/controllers.js');
+
+exports.index = function(req, res){
     res.render('index', {title: 'Meow', message: 'Meow again'});
 };
 
-exports.profile = (req, res) => {
-	res.render('profile');
+// exports.profile = (req, res) => {
+// 	res.render('profile');
+// };
+
+exports.profile = function(req, res){
+	res.render('profile', controllers.facebookGET);
 };
 
-exports.text = (req, res) => {
+exports.text = function(req, res){
 	Users.findOne({
 		phone: req.body.From
 	}, function (err, user){
 		if(!err && user){ // Found
 			if(user.facebook === '') { // Account not yet attached
-				console.log("No Facebook account found");
+				console.log('No Facebook account found');
 				res.send("<Response><Message>Welcome back, we still need permission to access your Facebook account. https://localhost:3000/auth/facebook</Message></Response>");
 			} else { // Account found and Facebook attached
 						   /* -----------------------------TEMPLATES ----------------------------- */

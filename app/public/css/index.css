@@ -1,3 +1,29 @@
-.center-text{
-	text-align: center;
+.splash-img {
+	background-image: url("../assets/congruent_outline.png");
+	background-repeat: repeat;
+}
+
+header {
+	color: #fff;
+}
+
+.index-header {
+	font: 100 7rem 'Helvetica Neue', Arial, sans-serif;
+	padding-bottom: 20px;
+}
+
+.index-sub-header {
+	font: 100 2rem 'Helvetica Neue', Arial, sans-serif;
+}
+
+.index-sub-info {
+	font: 200 3rem 'Helvetica Neue', Arial, sans-serif;	
+}
+
+.index-panel-one > .row {
+	margin: 90px  0 70px 0;
+}
+
+.index-panel-two {
+	margin: 50px 0 100px 0;
 }

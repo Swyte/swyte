@@ -49,7 +49,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.get('/', routes.index);
-app.get('/profile', routes.profile);
+//app.get('/profile', routes.profile);
+app.get('/:label', routes.profile);
 app.post("/text", routes.text);
 
 app.listen(3000);
